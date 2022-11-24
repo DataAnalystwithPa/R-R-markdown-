@@ -1,0 +1,127 @@
+1. Suppose you own stocks and watch the stock market every day, write a function in R named
+“stock_advice” to tell you whether you should sell your stocks under the following conditions
+using if-else conditional statements:
+ If the stock market value from today is lower than that from the average of the past 3 days,
+return “buy”
+ If the stock market value from today is higher than that from the average of the past 3 days,
+return “sell”
+ If the stock market value from today is the same as the average of the past 3 days, return
+“watch”
+Include 4 arguments in your function: today’s value, day 1 value, day 2 value and day 3 value.
+Note: to get the average of the past 3 days, use (day1+day2+day3)/3
+Find the predicted decision if today’s stock market value is $12.11, and the last 3 days values are
+$10.39, $15.98, and $13.96.
+
+CODE: 
+stock_advice<- function (value, day1,day2,day3){
+  average<-mean(c(day1,day2,day3)) 
+  if (average>value) 
+    return("sell")
+else if (average<value) 
+  return("buy ")
+else if (average == value)
+  return("watch")
+}
+stock_advice(12.11,10.39,15.98,13.96) 
+
+2. Let x be a vector of (3,6,12,17,19,33,24,21,10,8,5). Use a for loop and a conditional statement
+to do the following:
+If the x current element value is less than 15, then update that element with its current value -1
+(e.g. if the current x value is 3, then update it with 2). If the x current element value is larger
+than or equal to 15, then no change will be made and keep the current value.
+
+CODE: 
+x<-c(3,6,12,17,19,33,24,21,10,8,5) 
+for (i in 1:length(x)){
+  if (x[i]<15){
+    x[i]=x[i]-1
+  }
+  
+}
+print(x)
+
+3. a) Enter the data from the following table with three variables to create a data frame
+Name Education Salary
+Jack Master 20000
+Jerry Master 20000
+Emma Master 20000
+Andy Bachelor 30000
+Jayde Bachelor 10000
+Lynn PhD 70000
+Liam PhD 70000
+
+CODE:
+Name<-c("Jacke", "Jerry", "Emma", "Andy", "Jayde", "Lynn","Liam")
+Education<- c("Master","Master","Master","Bachelor","Bachelor", "PhD","PhD")
+Salary<- c(20000, 20000,20000,30000,10000,70000,70000)
+mydata<-data.frame(Name,Education,Salary)
+print(mydata)
+
+b) Use a loop and conditional statement to do the following:
+a. if the education level is Bachelor, increase the salary by 1000
+b. if the education level is Master, increase the salary by 2000
+c. if the education level is Ph.D. increase the salary by 3000
+
+CODE:
+for (row in 1:nrow(mydata)){
+  if(mydata[row, "Education"]=="Bachelor"){
+    mydata[row,"Salary"]=mydata[row,"Salary"]+1000
+  }
+
+  else if(mydata[row,"Education"]=="Master"){
+    mydata[row,"Salary"]=mydata[row,"Salary"]+2000
+  }
+
+  else{
+    mydata[row,"Salary"]=mydata[row,"Salary"]+3000
+  }
+}
+print(mydata)
+
+4. Suppose that you have a dataset with 8 individuals recording the blood pressure at baseline and
+a follow-up. Your goal is to show the correct treatment for these 8 individuals. The rule is: if the
+baseline>follow-up, then the patient is recovered and the treatment should show “no treatment
+needed”; if the baseline<follow-up, the treatment needs to show “more treatment needed”;
+and if baseline=follow-up, then the treatment is “to be determined”. Create a vector of baseline
+and a vector of follow-up with the data in the following table. Use a loop and conditional
+statement to show the appropriate treatment. Please do NOT create any function.
+Patient 1 2 3 4 5 6 7 8
+Baseline 100 110 109 99 103 101 125 130
+Follow-up 105 100 102 105 100 97 108 120
+
+CODE:
+treatment=NULL
+Baseline<-c(100,110,109,99,103,101,125,130)
+Follow_up<-c(105,100,102,105,100,97,108,120)
+for(i in 1:length(Baseline)){
+  if (Baseline[i]> Follow_up[i]){
+    treatment[i]= "no treatment needed"
+  }
+  else if (Baseline[i]< Follow_up[i]){
+    treatment[i]= "more treatment needed"
+  }
+  else {print("to be determined")}
+}
+
+5. Write a double for-loop function to calculate the sum of all numbers in a matrix. The code on
+our lecture slide 17 is a good reference for this question. Suppose the matrix is
+A=
+(36 51 40
+39 78 62
+22 37 52 )
+Run the function with matrix A.
+
+CODE:
+matrix_sum=0
+M<-function(x){   
+  for (i in 1:nrow(x))
+   {
+     for (j in 1:ncol(x))
+     {
+       matrix_sum<- matrix_sum+x[i,j]
+     }
+  }
+  return(matrix_sum)
+}
+A<-matrix(c(36,51,40,39,78,62,22,37,52), nrow=3, byrow=TRUE)
+M(A)

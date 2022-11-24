@@ -1,0 +1,34 @@
+1. Use the Birthweight data on D2l. The data recorded 16 new born infants birth weight (in oz), age
+(in days), systolic blood pressure (SBP), and gender (1 is female and 0 is male)
+a) Create an appropriate plot to show the relationship between birth weight and SBP with x
+being the birth weight and y being the SBP make your points red. Label the x-axis as Birth
+Weight and y-axis as Systolic Blood Pressure
+
+CODE: 
+
+b) What relationship did you see? (Use comments to write in your R Markdown file)
+c) Add a regression line to the graph in a) using the “lm” method without showing the
+confidence interval band
+2. Use the same Birthweight data as in question 1 on D2L.
+a) Create an appropriate graph to show the distribution of the systolic blood pressure (SBP)
+with 12 bins (bins=12), and add the label “Systolic Blood Pressure” to the x-axis and
+“Counts” to the y-axis. Fill the bars with the gold color and boundary with the black color.
+b) Do you think the distribution looks like a normal distribution? Write comments to answer.
+3. Use the data LEAD on d2l. The data showed the ID of the individuals, ages, sex (1 is male and 2 is
+female), full IQ scores (iqf) and lead level group (Group: 1 being the control group and 2 being
+the exposed group)
+a) Generate an appropriate graph to show the five-number summary of the full IQ scores for
+the control and exposed group in one graph. Label the x-axis with “Lead Group” and y with
+“Full IQ Scores”.
+b) Are there any outliers from the graph? If so, which group (control vs. exposed) has outliers?
+Write comments to answer.
+c) What can we say about the two groups’ full IQ scores? (i.e. Are they comparable? Is one
+group significantly higher than the other?) Write comments to answer
+4. Use the COVIDVaccine data on D2L. The data recorded the developer, type of vaccine
+(ProductCategory), development stage, and product description of COVID 19 vaccines. The data
+were back to September 2020. Generate a bar graph to show the counts of each Product
+Category. Put the x-axis tick mark labels on 45 degree with hjust=1.
+5. Use the data co2_loa on D2L to generate an appropriate plot to show the temporal patterns for
+the time-series data of CO2 concentrations on Mauna Loa, Hawaii. Note, the month and year
+information are already provided in the data. Let the x-axis show the months, y-axis be the CO2
+concentration, group=year, and use different color to show different year.

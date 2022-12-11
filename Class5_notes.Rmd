@@ -1,0 +1,72 @@
+---
+title: "Week5CLASS"
+author: "Pa"
+date: "2022-09-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+ 
+midwest$inmetrolabs(x="Area", y="")<-as.factor(midwest$inmetro)
+
+#generate scatter plot
+ggplot(data=midwest, aes(x=area, y=poptotal))+geom_point()+ylim(c(0,170000))+labs(x="Area", y="Total population size", title="Relationship between area and total population size")+geom_smooth(method = "lm", se=FALSE, linetype="solid", color="red")
+#there no corrlation between area and total popluation size
+```
+
+```{r}
+#Q1A
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point()+xlim(c(0,50000))+ylim(c(0,10))
+```
+
+```{r}
+#Q1B
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point()+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")+geom_smooth(method = "lm", linetype="dotted", color="blue", se=FALSE)
+```
+
+
+```{r}
+#Q2A
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point(aes(color=net_users))+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")
+```
+
+```{r}
+#Q2B
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point(aes(size=roadways))+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")
+```
+
+```{r}
+ggplot(data=economics, aes(x=date, y=psavert))+geom_line(size=0.5)+labs(x="Time", y="Personal Saving Rate", title = "Personal Saving Rate Over Time")
+```
+
+```{r}
+#Q3
+monthly_milk$year <-format(monthly_milk$timep, "%Y")
+monthly_milk$month <- format(monthly_milk$timep, "%m")
+
+ggplot(data= monthly_milk, aes(x=month, y=milk_per_cow_kg))+geom_line(aes(group=year, color=year))+labs(x="Months", y="Milk Amount", title= "The Amount of Milk every Month")
+```
+
+```{r}
+ggplot(data=mpg  ,aes(x=manufacturer))+geom_bar(fill="blue", color="red")+theme(axis.text = element_text(angle = 90, hjust=1))
+```
+
+```{r}
+#ploting histogram
+ggplot(data=mpg  ,aes(x=displ))+geom_histogram(fill="blue",color="black", bins=20)
+```
+
+```{r}
+#graph box plot 
+ggplot(data=mpg, aes(x=class, y=cty))+geom_boxplot(fill="red", color="black", outlier.color = "yellow")
+```
+

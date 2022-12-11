@@ -1,0 +1,46 @@
+---
+title: "Worksheet5"
+author: "Pa"
+date: "2022-09-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Q1A
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point()+xlim(c(0,50000))+ylim(c(0,10))
+```
+
+
+```{r}
+#Q1B
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point()+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")+geom_smooth(method = "lm", linetype="dotted", color="blue", se=FALSE)
+```
+
+
+```{r}
+#Q2A
+library(mdsr)
+library(ggplot2)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point(aes(color=net_users))+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")
+```
+
+```{r}
+#Q2B
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point(aes(size=roadways))+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")
+```
+
+```{r}
+#Q3
+monthly_milk$year <-format(monthly_milk$timep, "%Y")
+monthly_milk$month <- format(monthly_milk$timep, "%m")
+
+ggplot(data= monthly_milk, aes(x=month, y=milk_per_cow_kg))+geom_line(aes(group=year, color=year))+labs(x="Months", y="Milk Amount", title= "The Amount of Milk every Month")
+```
+

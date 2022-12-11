@@ -10,7 +10,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-#Q1
+#1.	Suppose you hire consulting firm to do some of your work and the original price is to pay $40 per hour. But you pay differently to different types of clients: 
+•	If it is for public clients, you pay 98% of the total price
+•	If it is for private clients, you pay 95% of the total price
+•	If it is for overseas clients, you pay 100% of the total price.
+Write a function with the name as price_consulting with two arguments: hours and client, with returning the final calculated price
+Call the function with hours=30, client =“public”
+
+
 price_consulting<-function(hours,client){
   if (client=="public"){
     price<-40*hours*0.98
@@ -27,7 +34,8 @@ price_consulting(30, "public")
 ```
 
 ```{r}
-#Q2
+#	Use a for loop to find the sum of the first 100 squares: x is from 1 to 100, and calculate ∑_(i=1)^100▒x^2 
+
 x<-NULL
 for (i in 1:100){
   x[i]=i^2
@@ -36,7 +44,14 @@ sum(x)
 ```
 
 ```{r}
-#Q3
+#3.	Researchers developed a new drug to treat migraine. They would like to compare the new drug with the current standard drug (Excedrin). The researchers recruited 10 patients and assigned them Excedrin. After a few months, when these 10 patients had migraine, they were assigned with the new drug. They recorded the time (in hours) to relief migraine from the 20 patients after they took their medications. The data is listed below
+Patients	1	2	3	4	5	6	7	8	9	10
+Excerdrin	3.5	5.7	2.5	2	1.5	1	4	3	1	2
+New Drug	3	2	3	1	0.5	2	1	1	1	0.5
+Create two vectors: one for Excedrin data; and one for new drug data.
+Use a loop of 1:10 and conditional statements to generate the output showing whether the new drug is better than Excedrin for the 10 pairs of patients. 
+Which treatment works better for those patients?
+
 excedrin<-c(3.5,5.7,2.5,2,1.5,1,4,3,1,2)
 new_drug<-c(3,2,3,1,0.5,2,1,1,1,0.5)
 treatment=NULL
@@ -56,4 +71,120 @@ for(i in 1:10){
 count 
 ```
 
+
+---
+title: "Homework 3"
+author: "Pa"
+date: "2022-09-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Q1 writing function named "stock_advice" to tell whether should sell stocks under certain condition using if else conditional statement •	If the stock market value from today is lower than that from the average of the past 3 days, return “buy”
+•	If the stock market value from today is higher than that from the average of the past 3 days, return “sell”
+•	If the stock market value from today is the same as the average of the past 3 days, return “watch”
+
+stock_advice<- function (value, day1,day2,day3){
+  average<-mean(c(day1,day2,day3)) 
+  if (average>value) 
+    return("sell")
+else if (average<value) 
+  return("buy ")
+else if (average == value)
+  return("watch")
+}
+stock_advice(12.11,10.39,15.98,13.96) 
+```
+
+```{r}
+#2.	Let x be a vector of (3,6,12,17,19,33,24,21,10,8,5). Use a for loop and a conditional statement to do the following:
+If the x current element value is less than 15, then update that element with its current value -1 (e.g. if the current x value is 3, then update it with 2). If the x current element value is larger than or equal to 15, then no change will be made and keep the current value.
+
+x<-c(3,6,12,17,19,33,24,21,10,8,5) 
+for (i in 1:length(x)){
+  if (x[i]<15){
+    x[i]=x[i]-1
+  }
+  
+}
+print(x)
+```
+
+```{r}
+#Q3a creating a tables 
+Name<-c("Jacke", "Jerry", "Emma", "Andy", "Jayde", "Lynn","Liam")
+Education<- c("Master","Master","Master","Bachelor","Bachelor", "PhD","PhD")
+Salary<- c(20000, 20000,20000,30000,10000,70000,70000)
+mydata<-data.frame(Name,Education,Salary)
+print(mydata)
+#Q3b creating loop and conditional statement a.	if the education level is Bachelor, increase the salary by 1000
+b.	if the education level is Master, increase the salary by 2000 
+c.	if the education level is Ph.D. increase the salary by 3000
+
+
+
+for (row in 1:nrow(mydata)){
+  if(mydata[row, "Education"]=="Bachelor"){
+    mydata[row,"Salary"]=mydata[row,"Salary"]+ 1000
+  }
+
+  else if(mydata[row,"Education"]=="Master"){
+    mydata[row,"Salary"]=mydata[row,"Salary"]+2000
+  }
+
+  else{
+    mydata[row,"Salary"]=mydata[row,"Salary"]+3000
+  }
+}
+print(mydata)
+```
+
+```{r}
+#4.	Suppose that you have a dataset with 8 individuals recording the blood pressure at baseline and a follow-up. Your goal is to show the correct treatment for these 8 individuals. The rule is: if the baseline>follow-up, then the patient is recovered and the treatment should show “no treatment needed”; if the baseline<follow-up, the treatment needs to show “more treatment needed”; and if baseline=follow-up, then the treatment is “to be determined”. Create a vector of baseline and a vector of follow-up with the data in the following table. Use a loop and conditional statement to show the appropriate treatment. Please do NOT create any function.
+Patient	1	2	3	4	5	6	7	8
+Baseline	100	110	109	99	103	101	125	130
+Follow-up	105	100	102	105	100	97	108	120
+  
+treatment=NULL
+Baseline<-c(100,110,109,99,103,101,125,130)
+Follow_up<-c(105,100,102,105,100,97,108,120)
+for(i in 1:length(Baseline)){
+  if (Baseline[i]> Follow_up[i]){
+    treatment[i]= "no treatment needed"
+  }
+  else if (Baseline[i]< Follow_up[i]){
+    treatment[i]= "more treatment needed"
+  }
+  else {print("to be determined")}
+}
+```
+
+```{r}
+#5.      
+Write a double for-loop function to calculate
+the sum of all numbers in a matrix. The code on our lecture slide 17 is a good
+reference for this question. Suppose the matrix is
+A= 36 51 40
+   39 78 62
+   22 37 52
+Run the function with matrix A.
+
+matrix_sum=0
+M<-function(x){   
+  for (i in 1:nrow(x))
+   {
+     for (j in 1:ncol(x))
+     {
+       matrix_sum<- matrix_sum+x[i,j]
+     }
+  }
+  return(matrix_sum)
+}
+A<-matrix(c(36,51,40,39,78,62,22,37,52), nrow=3, byrow=TRUE)
+M(A)
+```
 

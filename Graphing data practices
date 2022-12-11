@@ -1,0 +1,124 @@
+---
+title: "Worksheet5"
+author: "Pa"
+date: "2022-09-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1. Install package mdsr in R. Use the CIACountries data in the package mdsr to plot the relationship between education(y) and gdp(x) with the following requirements: 
+a)	Show the points with gdp<50000 and education<10 using the xlim and ylim
+b)	Add a regression line using blue dotted line without showing confidence interval
+```{r}
+#1a
+
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point()+xlim(c(0,50000))+ylim(c(0,10))
+```
+
+
+```{r}
+#Q1B
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point()+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")+geom_smooth(method = "lm", linetype="dotted", color="blue", se=FALSE)
+```
+
+
+#2:Generate the same graph as in question 1 with the following requirements:
+a)	Use color to show the variable net_uers
+b)	Use different size of bubbles to show roadway length.
+
+```{r}
+#Q2A
+library(mdsr)
+library(ggplot2)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point(aes(color=net_users))+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")
+```
+
+```{r}
+#Q2B
+library(mdsr)
+ggplot(data=CIACountries, aes(x=gdp, y=educ))+geom_point(aes(size=roadways))+xlim(c(0,50000))+ylim(c(0,10))+labs(x="GDP", y="Education spending", title="The relationship between GDP and Education spending")
+```
+
+#3: 3.	Generate a time-series plot to show the milk per cow through time (from January to December) with different color for different years. Use the following to extract the month information and year information:
+monthly_milk$year<-format(monthly_milk$month, format="%Y")
+monthly_milk$montha<-format(monthly_milk$month,format="%m")
+consider including group=year in aes(x=montha, y=milk_per_cow_kg, group=year)
+
+
+```{r}
+#Q3
+monthly_milk$year <-format(monthly_milk$timep, "%Y")
+monthly_milk$month <- format(monthly_milk$timep, "%m")
+
+ggplot(data= monthly_milk, aes(x=month, y=milk_per_cow_kg))+geom_line(aes(group=year, color=year))+labs(x="Months", y="Milk Amount", title= "The Amount of Milk every Month")
+```
+
+---
+title: "Homework 5"
+author: "Pa"
+date: "2022-09-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1.	Use the Birthweight data. The data recorded 16 new born infants birth weight (in oz), age (in days), systolic blood pressure (SBP), and gender (1 is female and 0 is male)
+a)	Create an appropriate plot to show the relationship between birth weight and SBP with x being the birth weight and y being the SBP make your points red. Label the x-axis as Birth Weight and y-axis as Systolic Blood Pressure
+b)	What relationship did you see? (Use comments to write in your R Markdown file)
+c)	Add a regression line to the graph in a) using the “lm” method without showing the confidence interval band
+
+```{r}
+#Q1
+library(mdsr)
+ggplot(data=birthweight, aes(x=Birthweight, y=SBP))+geom_point(color="red")+xlim(c(100,200))+ylim(c(70,100))+labs(x="Birth Weight", y="Systolic Blood Pressure", title="The relationship between baby birth weight and systolic blood pressure")+geom_smooth(method = "lm", linetype="solid", color="black", se=FALSE)
+
+
+#b)There is no relation between baby weight and SBP 
+```
+#2.	Use the same Birthweight data as in question 1 on D2L. 
+a)	Create an appropriate graph to show the distribution of the systolic blood pressure (SBP) with 12 bins (bins=12), and add the label “Systolic Blood Pressure” to the x-axis and “Counts” to the y-axis. Fill the bars with the gold color and boundary with the black color.
+b)	Do you think the distribution looks like a normal distribution? Write comments to answer.
+
+
+```{r}
+#Q2
+ggplot(data=birthweight, aes(x=SBP))+geom_histogram(fill="gold", color="black", bins=12)
+#b)this is not a normal distribution 
+```
+#3.	Use the data LEAD . The data showed the ID of the individuals, ages, sex (1 is male and 2 is female), full IQ scores (iqf) and lead level group (Group: 1 being the control group and 2 being the exposed group)
+a)	Generate an appropriate graph to show the five-number summary of the full IQ scores for the control and exposed group in one graph. Label the x-axis with “Lead Group” and y with “Full IQ Scores”.
+b)	Are there any outliers from the graph? If so, which group (control vs. exposed) has outliers? Write comments to answer.
+c)	What can we say about the two groups’ full IQ scores? (i.e. Are they comparable? Is one group significantly higher than the other?) Write comments to answer
+
+
+```{r}
+#Q3
+LEAD$Group <- as.factor(LEAD$Group)  #use when x is not taking in as numeric 
+ggplot(data= LEAD, aes(x=Group, y=iqf))+geom_boxplot()+labs(x="Lead Group", y="Full IQ Scores")
+
+#b)there are two outliers on group 1(Control group)
+#c)group 1 is signigicantly higher than group 2
+
+```
+#4.	Use the COVIDVaccine data . The data recorded the developer, type of vaccine (ProductCategory), development stage, and product description of COVID 19 vaccines. The data were back to September 2020. Generate a bar graph to show the counts of each Product Category. Put the x-axis tick mark labels on 45 degree with hjust=1.
+
+```{r}
+#Q4 
+ggplot(data=COVIDVaccine  ,aes(x=ProductCategory))+geom_bar(fill="blue", color="red")+theme(axis.text = element_text(angle = 45, hjust=1))
+```
+5.	Use the data co2_loa  to generate an appropriate plot to show the temporal patterns for the time-series data of CO2 concentrations on Mauna Loa, Hawaii. Note, the month and year information are already provided in the data. Let the x-axis show the months, y-axis be the CO2 concentration, group=year, and use different color to show different year. 
+```{r}
+co2_loa$year <- as.factor(co2_loa$year)
+
+ggplot(data= co2_loa, aes(x=month, y=co2_conc))+ geom_line(aes(group=year, color = year))+ labs(x= "Months", y="CO2 concentration", title= "Amount of CO2 per months")
+
+```
+
+

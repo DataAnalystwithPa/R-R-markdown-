@@ -1,0 +1,54 @@
+---
+title: "Week2Activites"
+author: "Pa"
+date: "2022-08-31"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+#1.	Download the student data and read it into R; Find the mean grade. What is the mean grade?
+mean(student_data$Grade) 
+```
+
+```{r}
+#2.	Write a function called revword() to reverse any word using the functions 
+strsplit(a, “”)[[1]]
+  this function is to split the word into letters, where a is a word
+rev()
+   this function is to reverse the letters
+paste(b, collapse=“”)
+   this function is to paste all the letters into a word
+
+Run the function with the input of “sum”
+
+#codes
+revword<- function(a){
+  b<-strsplit(a, "")[[1]]
+  c<- rev(b)
+  d<-paste(c, collapse = "")
+  return (c)
+}
+revword("sum")
+  
+```
+
+```{r}
+#1.      
+Write a function called expratio(), to calculate
+the following x/e^(1+x)
+Using the function exp() to calculate
+exponentials. Run the function to find 3/e^(1+3)
+
+expratio<-function(x){
+  result<-exp(x/(1+x))
+  return(result)
+}
+expratio(3)
+```
+
+
+
+

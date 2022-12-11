@@ -1,0 +1,59 @@
+---
+title: "Worksheet3"
+author: "Pa"
+date: "2022-09-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Q1
+price_consulting<-function(hours,client){
+  if (client=="public"){
+    price<-40*hours*0.98
+  }
+  else if (client=="private"){
+    price<-40*hours*0.95
+  }
+  else if (client=="overseas"){
+   price<-40*hours*1
+  }
+  return(price)
+}
+price_consulting(30, "public")
+```
+
+```{r}
+#Q2
+x<-NULL
+for (i in 1:100){
+  x[i]=i^2
+}
+sum(x)
+```
+
+```{r}
+#Q3
+excedrin<-c(3.5,5.7,2.5,2,1.5,1,4,3,1,2)
+new_drug<-c(3,2,3,1,0.5,2,1,1,1,0.5)
+treatment=NULL
+count=0
+for(i in 1:10){
+  if (excedrin[i]<new_drug[i]){
+    treatment[i]="excerdrin"
+  }
+  else if (excedrin[i]>new_drug[i]){
+    treatment[i]="New"
+  }
+  else {treatment[i]="same"}
+  if(treatment[i]=="New"){
+    count=count+1
+  }
+}
+count 
+```
+
+

@@ -1,0 +1,155 @@
+---
+title: "week10"
+author: "Pa"
+date: "2022-11-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1.	Is tongue-rolling a dominant trait?  We use information from the class to estimate the proportion of students who can roll their tongue.  See the attached photo.  Have the students get in pairs to determine who can and cannot roll their tongue.  (Tongue rolling has been said to be a dominant trait, in which case theoretically 75% of all people should be able to roll their tongues). Test to see if there is evidence that the proportion of people who can roll their tongues is more than 75%.
+How many people are in the classroom with you now? _________
+ 
+How many of them can roll their tongue? _________
+
+What is the sample proportion? ___________
+
+What is the test statistic?
+
+
+What is the p-value?
+
+
+What is your decision to H0? What is your decision in the context?
+
+
+```{r}
+#q1
+#H0: p=0.75, Ha: p>0.75
+prop.test(x=9, n=12, p=0.75, alternative = "greater")
+
+#We fail to reject H0. There is no evidence to support the proportion of people who can roll their tong is more than 75%. 
+```
+#2.	Use the data Responses to self-driving cars. Respondents provided if they would be comfortable riding in a self-driving car (Comfortable), how many years it would take before self-driving cars were the majority on the road (When), if they expected accidents to increase, decrease, or stay the same when self-driving cars dominate the road (Crashes), their sex (Sex), and their age (Age). Use the 0.05 significance level to test the claim that less than half of the population feel comfortable to ride a self-driving car. 
+What are the null and alternative hypotheses?
+
+
+What is the test statistic?
+
+
+
+What is the p-value?
+
+
+What is your decision to H0? What is your decision in the context?
+
+
+```{r}
+#Q2
+table(Responses_to_Self_driving_Cars$Comfortable)
+#h0: p=0.5, Ha: p<0.5
+prop.test(x=2860, n=5980, p=0.5, alternative = "less")
+
+#reject H0. There is evidence to support that there is less than 50 percentage of people who feel comfortable riding in a self drving car. 
+```
+#3.	Use the data for the show Golden Ball to test if the proportion of steal in women is significantly different from the proportion of steal in men?
+Gender	Split	Steal
+Male	140	130
+Female	160	140
+What are the null and alternative hypotheses?
+What is the test statistic?
+What is the p-value?
+What is your decision to H0? What is your decision in the context?
+Generate a plot to show the difference between proportion of women choosing “steal” and proportion of men choosing “steal”
+
+
+```{r}
+#Q3
+library(ggplot2) 
+#h0: p(women)=p(men)Ha: p(women)!= p(men)
+prop.test(x=c(140,130), n=c(300,270), alternative = "two.sided")
+#fail to reject H0. There is no evidence to support that the proportion of steal in women is different from the steal in men
+
+Gender<- c("Male", "Female")
+steal <- c(140/300,130/270)
+mydata <- data.frame(Gender, steal)
+
+ggplot(data = mydata, aes(x= Gender, y= steal))+geom_bar(stat = "identity", position = "dodge")
+```
+#4.	Use the Titanic Survival Data. The data recorded if they were an adult or child, their gender, the class they were staying on, and whether or not a person is alive in the accident.
+Use 0.05 significance level to test the claim that the survival rate in the first class is significantly higher than the survival rate in the third class.
+What is the test statistic?
+What is the p-value?
+What is your decision to H0? What is your decision in the context?
+
+```{r}
+#Q4
+table(Titanic_Survival_Data$Class, Titanic_Survival_Data$Survival)
+
+#H0: p(firsrt)= p(third); Ha: p(first)> p(third)
+prop.test(x=c(203,178), n=c(325,706), alternative = "greater")
+#reject H0. There is evidence to support that the survival rate in the first class is significantly higher than the survival rate in the third class 
+```
+
+---
+title: "Homework 10"
+author: "Pa"
+date: "2022-11-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1.	A clinic developed a new scheduling method to reduce the amount of unscheduled nurse visits. The proportion of unscheduled nurse visit was 40% before this intervention. After this intervention, in a sample of 100 clinic visits, 25 of them were unscheduled nurse visits. Use the 0.05 significance level to test the claim that the proportion of unscheduled nurse visits is significantly less than 40%. Show your R code. Write down the H0 and Ha, and the decision to address the original claim in the context in R Markdown using comments.
+```{r}
+#Q1
+#H0: p=0.4 Ha: p<0.4
+prop.test(x=25, n=100, p=0.4, alternative = "less")
+
+#reject H0. There is evidence to support that the proportion of unscheduled nurse visits is significantly less than 40%
+```
+#2.	A pharmaceutical company develop a new drug (A) to treat migraine. The company would like to compare the proportion of people who responded positively to drug A is significantly higher than the proportion of people who responded positively to the standard drug (drug B). On one sample of 200 people who took A, 130 responded positively, and on another sample of 100 people who took B, 50 people responded positively. Use the 0.05 significance level to test the claim that the proportion of responded positively to A is significantly higher than the proportion of responded positively to B. Show your R code. Write down the H0 and Ha, and the decision to address the original claim in the context in R Markdown using comments.
+
+```{r}
+#Q2
+#H0: P(drugA)= P(drugB) Ha: P(drugA)> P(durgB)
+prop.test(x=c(130,50), n=c(200,100), alternative = "greater")
+
+#reject H0. There is evidence to support that  the proportion of responded positively to A is significantly higher than the proportion of responded postitively to B
+```
+#3.	A car manufacturer aims to improve the quality of the products by reducing the defects and hence increase the customer satisfaction. He monitors the efficiency of two assembly lines in the shop. In line A, there are 18 defects reported out of 200 samples. In line B, there are 25 defects out of 600 cars. Use the 0.05 significance level to test the claim that the proportion of defects in line A is significantly different from the proportion in line B. Write down the H0 and Ha, and the decision to address the original claim in the context in R Markdown using comments.
+
+```{r}
+#Q3 
+#H0: P(lineA)= P(lineB) Ha: P(lineA)!= P(lineB)
+prop.test(x=c(18,25), n=c(200,600), alternative = "two.sided")
+#Reject H0. There is evidence to support that the proportion of defects in line A is significantly different from the proportion in line B. 
+
+```
+#4.	The data “COVID19 Vaccine Preference” showed a sample of 50 individuals’ preference of the type of COVID19 vaccine. Use the table() function to get the counts of each preference first. Use the 0.05 significance level to test the claim that the proportion of preferring Moderna vaccine is significantly different from the proportion of preferring Pfizer. (use comment to show your null and alternative hypothesis, and the decision to the claim)
+
+```{r}
+#Q4
+#H0: P(moderna) = P(Pfizer) Ha: P(moderna)!= P(Pfizer)
+table(COVID19_Vaccine_Preference$Preference)
+
+prop.test(x=c(26,24), n=c(50,50), alternative = "two.sided")
+
+#Fail to reject H0. There is no evidence to support that the proportion of preferring Moderna vaccine is significantly different from the proportion of preferring Pfizer.
+```
+#5.	The data “onlineLearning” recorded the students’ ratings of synchronous online classes and asynchronous online classes. Use the 0.05 significance level to test the claim that the proportion of rating of 5 for synchronous classes is significantly higher than the proportion of rating of 5 for asynchronous classes. Use table() to get the corresponding counts.
+
+```{r}
+#Q5
+#H0: P(synchronous)=P(asynchronous) Ha:  P(synchronous)>P(asynchronous)
+table(onlineLearning$Sync)
+table(onlineLearning$Async)
+
+prop.test(x=c(35,21), n=c(18+26+35,10+13+16+19+21), alternative = "greater")
+
+#reject H0: There is evidence to support that the proportion of rating of 5 for synchronous classes is significantly higher than the proportion of rating of 5 for asynchronous classes
+
+
+```

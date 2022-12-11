@@ -1,0 +1,185 @@
+---
+title: "Worksheet11"
+author: "Pa"
+date: "2022-11-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+#Make your guess to the anonymous survey on
+d2l. Use the 0.05 significance level to test the claim that the mean students’
+guess is significantly different from Wei’s actual age.
+Step 1: Formulate the null and alternative
+hypotheses
+Step 2: Choose the ______ test
+Step 3: Find the test statistic and p-value
+Step 4: Make a decision to ; Explain the decision to
+address to the original claim
+```{r}
+#Q1
+#H0: mu=42  Ha: mu!=42
+#one sample test 
+t.test(x=c(43, 44, 37, 49, 38, 42, 44, 51, 35
+), mu=42, alternative = "two.sided")
+
+#fail to reject H0. There is no evidence to prove that the mean students’ guess is significantly different from Wei’s actual age
+
+```
+#2: the data Startup T records the costs of opening a Pizzeria store and a Bakery store at different locations. Use the 0.05 significance level to test the claim that opening a Pizzeria store and opening a Bakery store costs differently. Note: remove the missing value first and then do the hypothesis testing.
+Graph the mean and 95% confidence intervals.
+Step1: Formulate the null and alternative hypotheses
+
+
+Step 2: Choose the ____ test
+Step 3: What is the test statistic and p-value?
+
+
+Step 4: Make a decision to H0, and explain the decision to address the claim in the context
+
+
+Generate a point plot with error bars to visualize the means and 95% confidence intervals.
+
+
+```{r}
+#Q2
+#H0: mu(Bakery)=mu(Pizza)  Ha:mu(Bakery)!=mu(Pizza)
+Store1<-Startup %>%
+  filter(!is.na(Cost))
+t.test(Cost~Store, data= Store1, alterantive= "two,side")
+
+#Fail to reject H0. There is no evidence to support that opening a Pizzeria store and opening a Bakery store costs differently.
+
+Store1%>%
+  group_by(Store)%>%
+  summarize(avecost=mean(Cost), secost=sd(Cost)/sqrt(length(Cost)), tvalue=qt(1-0.05/2, length(Cost)-1))%>%
+  ggplot(aes(x=Store, y= avecost))+geom_point()+geom_errorbar(aes(ymin=avecost-secost*tvalue,ymax=avecost+secost*tvalue))+ylim(c(0,120))
+
+```
+#3: The 2008 Olympics were full of controversy about new swimsuits possibly providing unfair advantages to swimmers, leading to new international rules that came into effect January, 2010, regarding swimsuit coverage and material. A study (de Lucas et al. 2000) tested whether wearing wetsuits influences swimming velocity. Ten competitive swimmers swam 1500 m at maximum speed twice each, once wearing a wetsuit and once wearing a regular bathing suit. Each time, the velocity of swimmer was recorded. The data is shown in the Swimming data.
+Perform an appropriate test to see if the average velocity from the wetsuit is significantly higher than the average velocity from the regular suit.
+Step1: Formulate the null and alternative hypotheses
+Step 2: Choose the ___________ test
+Step 3: What is the test statistic and p-value?
+Step 4: Make a decision to H0, and explain the decision to address the claim in the context
+
+```{r}
+#Q3
+#H0: mu(wet)=mu(regular) Ha: mu(wet)>mu(regular)
+t.test(Velocity~Suit, data = swimming, alternative="less", paired= TRUE)
+
+#Reject H0. There is evidence to support the claim that the average velocity from the wetsuit is significantly higher than the average velocity from the refular suit
+```
+
+---
+title: "Homework 11"
+author: "Pa"
+date: "2022-11-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+#1.	How well materials conduct heat matters when designing houses, for example. Conductivity is measured in terms of watts of heat power transmitted per square meter of surface per degree Celsius of temperature difference on the two sides of the material. In these units, glass has conductivity about 1. The National Institute of Standards and Technology provides exact data on properties of materials. Here are measurements of the heat conductivity of 10 randomly selected pieces of a particular type of glass:
+1.1	1.07	1.1	1.07	1.12	1.08	1.18	1.08	1.12	1.08
+Use a 0.05 significance level to test the claim that mean conductivity of this type of glass is greater than 1. Use comments to write the H0, Ha and the decision in R Markdown.
+
+
+```{r}
+#Q1
+#H0: mu=1 Ha: Mu>1
+t.test(x=c(1.1,1.07,1.1,1.07,1.12,1.08,1.18,1.08,1.12,1.08
+), mu=1, alternative = "greater")
+
+#reject H0. There is evidence to support that the mean conductivity of this type of glass is greater than 1.
+
+```
+#2.	In the data “airquality_New York”, the second column recorded the temperature from May to September in 2010 in New York. Use the 0.05 significance level to the claim that the mean temperature in New York from May to August is higher than 70 degrees. Note that the data provided the data from May to September, and your will need to only keep the data from May to August. Use comments to write the H0, Ha and the decision in R Markdown.
+
+```{r}
+#Q2
+#H0: mu=70, mu>70
+air1<-airquality_NewYork %>%
+  select(Temp, Month)%>%
+  filter(!is.na(Temp))%>%
+  filter(Month %in% c(5,6,7,8))
+
+t.test(x= air1$Temp, mu=70, alternative = "greater")
+
+#Reject H0. There is evidence to support that the mean temperature in New York from May to August is higher than 70 degrees
+
+```
+#3.	A study sought to demonstrate that soy beans inoculated with nitrogen-fixing bacteria yield more and grow adequately without the use of expensive environmentally deleterious synthesized fertilizers. The trial was conducted under controlled conditions with uniform amounts of soil. The initial hypothesis was that inoculated plants would outperform their uninoculated counterparts. This assumption was based on the facts that plants need nitrogen to manufacture vital proteins and amino acids and that nitrogen-fixing bacteria would make more of this substance available to plants, increasing their size and yield. There were 8 inoculated plants (I) and 8 uninoculated plants (U). The plant yield was measured by pod weight for each plant is given  (Plants data). Note that you want to remove the na’s first.
+a)	Use 0.05 significance level to test the claim that the mean pod weight for the inoculated plants is higher than the mean pod weight for the uninoculated plants. Use comments to write the H0, Ha and the decision in R Markdown.
+b)	Generate a point graph with error bars to represent the 95% confidence intervals for the inoculated and uninoculated plants.
+
+
+```{r}
+#Q3
+#H0: mu(inoculated_plant)= mu(uninoculated_counterparts) Ha:mu(inoculated_plant)> mu(uninoculated_counterparts)
+
+#3a
+Plant123<-Plants_data %>%
+  filter(!is.na(weight))
+
+
+t.test(weight~Plant, data= Plant123, alterantive= "greater")
+
+#Reject H0. There is evidence to support that  the mean pod weight for the inoculated plants is higher than the mean pod weight for the uninoculated plants.
+
+#3b
+Plant123%>%
+  group_by(Plant)%>%
+  summarize(aveweight=mean(weight), seweight=sd(weight)/sqrt(length(weight)), tvalue=qt(1-0.05/2, length(weight)-1))%>%
+  ggplot(aes(x=Plant, y= aveweight))+geom_point()+geom_errorbar(aes(ymin=aveweight-seweight*tvalue,ymax=aveweight+seweight*tvalue))+ylim(c(0,3))
+
+```
+#4.	Suppose we want to know whether or not a college training program is able to increase the maximum vertical jump (in inches) of college basketball players. The data “Jump data” recorded the maximum height (in inches) the 15 college basketball players can reach before and after the training program. Use the 0.05 significance level to test the claim that the average height of the jumps after the program is significantly higher than the average before the program. Note: you will need to change the data format to the long format before analysis, so you have one independent variable and one dependent variable. Use comments to write the H0, Ha and the decision in R Markdown.
+
+```{r}
+#4
+#H0: mu(jumpBefore)=mu(jumpAfter) Ha: mu(jumpBefore)<mu(jumpAfter)
+Jumping1<-Jump_data%>%
+  gather(key = Jumps, JumpBefore, JumpAfter, value= Result, JumpBefore,JumpAfter )
+
+t.test(Result~Jumps,
+       data = Jumping1, alternative= "greater")
+
+#Fail to reject H0. There is no evidence to support he average height of the jumps after the program is significantly higher than the average before the program.
+
+
+```
+#5.	A drug manufacture would like to compare their newly developed two medications (Drug A and Drug B) in treating migraine. The data is DrugAB. They took a sample of 12 individuals and assigned them drug A and took another sample of 11 individuals and assigned them drug B. They recorded the time to relief the headache as the measurements to compare the two drugs. 
+
+a)	Use group_by() and summarize() to find the max value in drug A group and B group
+b)	Remove the max values in the A and B groups.
+c)	Use the data in b) and the 0.05 significance level to test if the data provided evidence that the average relief time after taking drug A is significantly lower than that after taking B. Use the comments to write the H0, Ha and the decision in R Markdown.
+
+
+```{r}
+#5a 
+DrugAB%>%
+  group_by(Drug)%>%
+  summarise(max=max(Relief, na.rm = TRUE))
+#5b
+DrugAB2<-filter(DrugAB, !Relief %in% c(201, 276))
+#5C 
+#H0: mu(drugA)= mu(drugB) Ha: mu(drugA)<mu(DrugB)
+t.test(Relief ~ Drug,data = DrugAB2, alternative= "less")
+
+#fail to reject H0. There is no evidence to support  that the average relief time after taking drug A is significantly lower than that after taking B. 
+  
+
+```

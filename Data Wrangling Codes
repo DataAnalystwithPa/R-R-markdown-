@@ -1,0 +1,46 @@
+Using pipeline: 
+%>%
+format: 
+dataframe %>%
+function()%>%
+
+MANIPULATE DATASET FUNCTION:
+select(): take a subset of the columns/ choose columns 
+	select(variable 1, variable2,…) 
+filter(): take a subset of rows/ choose individuals 
+	filter(condition)
+	to choose more than one categories of a factor, use %in$ c() or use multiple ==
+	logical expression: | means or, & means and 
+mutate(): add or modify existing columns 
+	add a new column at the end of data frame 
+	change an exiting column 
+	if want to add new column at end of original data, choose different variable name in mutate() than the original variable name 
+	if want to replace original column then use same name (not recommended) 
+	
+	
+arrange(): sort rows 
+	data%>% arrange(variablename)
+	default: sort by ascending order 
+	if want to sort by descending order use desc(variable)
+group_by() and summarize (): find summary statistics of group
+	go together 
+	calculate summary statistics
+group_by(variable1)%>%
+summarize(namea=mean(variale2), nameb=sd(variable2),…)
+	variable1 in group_by() is categorical, variable2 in summarize () is numeric 
+Missing values: 
+Find without missing values 
+	filter(!is.na(variable))%>%
+group_by(…)%>%
+summarize(average=mean(variable))
+	or 
+summarize(average=mean(variable, na.rm=TRUE))
+find total of none missing individuals:
+	filter(!is.na(variable))%>%
+	group_by()%>%
+	summarize(total=n())
+Combine/merger tables 
+	inner_join(): return all rows from x where there are matching values in y, and all columns from x and y 
+	left_join(): return all rows from x, and all columns from x and y. Rows in x not matching with y will have NA in the new columns 
+	right_join(): return all rows from y, and all columns from x and y. Rows in y not matching with x will have NA in the new columns 
+

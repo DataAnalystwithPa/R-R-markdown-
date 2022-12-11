@@ -1,0 +1,89 @@
+package use to generate interactive plot 
+use package plotly 
+ggplot() and use ggploty() to generate an interavtive plot 
+
+interactive tables: 
+use package DT 
+function datatable()
+
+how to process text using gsub(), grep((), and substr()
+Search by pattern:
+	grep(pattern, vector)
+o	return individuals who has the pattern 
+o	ex:
+x<-c(“Anderson”, “Jackson”, “Peterson”, “Green”)
+grep(“son”, x)   #this shows individuals who has last name including “son”
+Search by position: 
+	substr(vector, start=  , stop=  )
+o	returns the substrings between the starting point and ending point 
+o	ex: 
+x<-c(“Anderson”, “Jackson”, “Peterson”, “Green”)
+		substr(x, start=1, stop=4)  #this gives the first 4 letters of the names 
+substitution:
+	gsub(pattern, pattern, vector)
+o	ex: 
+x<-c(“Anderson”, “Jackson”, “Peterson”, “Green”)
+gsub(“son”, “”, x)    #substitute “son” with an empty strings
+	str_replace_all(): a function in the stringr package and the stringr packageg is in the tidyverse 
+	str_replace_all(): to replace certain pattern in all words 
+o	ex: str_replace_all(x, “son”, “”)
+o	str_replace_all() works the same as gsub()
+
+generate a word cloud using text mining techniques: 
+Text mining: analyze the text in terms of word frequencies 
+	Use R function readLines() in package tm to read text from url to R, use wordcloud package  
+o	Ex: 
+Library™
+Mytext1<- readLines(“ link”)
+	Create a vector source and then create a corpus 
+o	Create vector source of test using VectorSource()
+	Vector source takes a group of texts and makes each text element as a douctment 
+o	Load text documents as a one corpus using Corpus()
+	A Corpus is a collection of text documents over which we would apply tect mining or natural language processing 
+	Step 3: clean up the text 
+o	tm_map()
+	tm_map(corpus, content_transformer(tolower))
+•	transform all words to lower case 
+	tm_map(corpus, removeNumbers)
+•	remove all numbers in the text 
+	tm_map(corpus, removePunctuation)
+•	remove all punctuation
+	tm_map(corpus,stripWhitespace)
+•	remove extra white space
+	tm_map(corpus, removeWoeds, stopwords(“English”)
+•	remove common English words like a, the, of, at, in, etc 
+	step4: create matrix for words and their frequencies in the text 
+o	create term(word) document matrix using TermDocumentMatrix()
+	term document matrix is a way of representing the words in text as a table of numbers. The wors of matrix represent the text to be analyzed and the colmns represent the words from the text that are to be used in the analysis 
+	step 5: make text document matrix as a numeric matrix using as.matrix()
+o	remove row labels and put column labels as row labels from text document matrix 
+o	numeric matrix will show the frequency of each word in the document 
+o	add up the row total to get the total frequency of each word in the entire text file using 
+	mymatrix <-sort(rowSums(matrix),decreasing=TRUE)
+o	conver matrix of words and their frequencies to a data frame 
+	mydf <- as.data.frame(mymatrix)
+	final step: generate word cloud using
+o	wordcloud(words, frequency, color=)
+	words: words from the text (rownames(df) or row.names(df))
+	frequency: frequency of the words 
+	color= brewe.pal(n , “palette name”) 
+•	n: number of different colors in palette 
+•	dark2: a palette name in R 
+	add min.fre=k if there are warning of some words couldn’t fit 
+
+Example: 
+mytext <- readLines("https://lite.cnn.com/en/article/h_8abfba66dd3b29000407bb1ff5648c6e")
+
+mymatrix <- mytext%>%
+  VectorSource()%>%
+  Corpus()%>%
+  tm_map(content_transformer(tolower))%>%
+  tm_map(removeNumbers)%>%
+  tm_map(removePunctuation)%>%
+  tm_map(stripWhitespace)%>%
+  tm_map(removeWords, stopwords("English"))%>%
+  TermDocumentMatrix()%>%
+  as.matrix()
+mymatrix1<-sort(rowSums(mymatrix), decreasing = TRUE)
+mydf <- as.data.frame(mymatrix1)
+wordcloud(rownames(mydf), mydf$mymatrix1, colors = brewer.pal(8, "Dark2"))

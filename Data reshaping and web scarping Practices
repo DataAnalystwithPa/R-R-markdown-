@@ -1,0 +1,108 @@
+---
+title: "Class7notes"
+author: "Pa"
+date: "2022-10-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1.	Use the piggy data, is that data a long format or a wide format? Change the format
+
+```{r}
+library(rvest)
+library(ggplot2)
+library(tidyverse)
+library(Lahman)
+```
+
+```{r}
+Piggy %>%
+  gather(key = week, value = weights, week0,week4, week8, week12, week16)
+
+#2.	Use the Diabete data, change the format with a variable SBP showing the systolic blood pressure at different times.
+Diabete %>%
+  spread(key= Time, value = SBP)
+```
+#3.	Use the Tree data, find the mean for each variables of group, branch density, branch thickness, and tree heights. Use one of the apply functions.
+
+```{r}
+Tree_data %>%
+  apply(data= Tree_data, MARGIN = 2, FUN = mean, na.rm=TRUE)
+```
+#4.	Use the Teams data, choose the variables: teamID, Rank, G, W, L, R, and RA. Use apply (), sapply(), and lapply() to find the mean of each column
+```{r}
+Team1<-Teams %>%
+  select(teamID, Rank, G, W, L,R, RA)
+
+lapply(Team1, MARGIN = 2, FUN = mean, na.rm=TRUE)
+sapply(Team1, MARGIN = 2, FUN = mean, na.rm=TRUE)
+apply(Team1, MARGIN = 2, FUN = mean, na.rm=TRUE)
+```
+#5.	This is the Wikipedia website about the 2022 Winter Olympics medal winners :
+https://en.wikipedia.org/wiki/List_of_2022_Winter_Olympics_medal_winners
+Table 13 shows the winning athletes in figure skating. Scrape that table.
+
+```{r}
+library(rvest)
+table1<- read_html("https://en.wikipedia.org/wiki/List_of_2022_Winter_Olympics_medal_winners")
+table1 %>%
+  html_nodes("table")%>%
+  html_table(fill=TRUE)%>%
+  .[[13]]
+```
+
+---
+title: "Homework 7"
+author: "Pa"
+date: "2022-10-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(rvest)
+library(ggplot2)
+library(tidyverse)
+library(Lahman)
+```
+#1.the data Sea Food recorded the bacterial growth on oysters and mussels. The bacterial counts are measured in log scale at three different times. 
+a)	Is the data given in a long format or a wide format? Use a comment to write your answer.
+b)	Convert the data to have one variable showing the bacterial counts and one variable showing the different time points.
+
+```{r}
+#Data is in wide format; when output is more than 1 than it wide format 
+#Q1. Convert data wide to long 
+Seafood_data %>%
+  gather(key = Seafood, value = new, time0, time1, time2)
+```
+#2.	Use the Teams data in Lahman package. The team IDs corresponding to Brooklyn baseball teams are listed as: “BR1”,”BR2”,”BR3”,”BR4”,”BR”,”BRP”,”BRF”
+
+a)	Keep the variables teamID, HR (home runs) and HRA (homeruns allowed). 
+b)	Keep only Brooklyn baseball teams (“BR1”,”BR2”,”BR3”,”BR4”,”BR”,”BRP”,”BRF”).
+c)	Choose one apply function to find the average home runs (HR) and average homeruns allowed (HRA).
+
+
+```{r}
+#Q2
+Teams %>%
+   filter(teamID %in% c("BR1", "BR2", "BR3", "BR4", "BR","BRF", "BRP"))%>%
+ select(teamID, HR, HRA)%>%
+lapply( MARGIN = 2, FUN = mean, na.rm=TRUE)
+```
+#3.	This website https://en.wikipedia.org/wiki/2016_Summer_Olympics recorded the medal counts for the 2016 Summer Olympics. Scrape the table 11 to find the medal counts.
+
+```{r}
+#Q3
+library(rvest)
+table13<- read_html("https://en.wikipedia.org/wiki/2016_Summer_Olympics")
+table13 %>%
+  html_nodes("table")%>%
+  html_table(fill=TRUE)%>%
+  .[[11]]
+```
+

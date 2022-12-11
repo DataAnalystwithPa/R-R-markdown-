@@ -1,0 +1,39 @@
+---
+title: "Worksheet 12"
+author: "Pa"
+date: "2022-11-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyselect)
+library(ggplot2)
+```
+
+
+```{r}
+numbers_letters<- c(9,3,4,7,3,5,4,5,9,8,5,6,5,7)
+scrabble_score <- c(13,6,4,9,3,8,8,6,13,14,10,8,5,14)
+Class_data<- data.frame(numbers_letters, scrabble_score)
+
+ClassTest<-lm(scrabble_score~ numbers_letters, data = Class_data)
+summary(ClassTest)
+
+#yhat=-0.39+1.58x
+#h0: beta=0, ha: beta!=0
+#Reject H0: There is evidence to support that there is a signigicant linear relationship between the number of letters and scrabble value of a last name
+```
+
+```{r}
+Carmodel <- lm(mpg~ hp+drat+wt, data = mtcars)
+summary(Carmodel)
+
+#yhat= 29.39-0.03x1+1.62x2-3.22x3
+#H0: beta =0, Ha: beta!= 0
+# The significant factor is horsepower and weight
+```
+

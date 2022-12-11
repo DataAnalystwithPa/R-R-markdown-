@@ -1,0 +1,163 @@
+---
+title: "Worksheet9"
+author: "Pa"
+date: "2022-10-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1.	Generate an interactive graph to show the counts of each manufacturer.
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(plotly)
+library(nycflights13)
+```
+
+```{r}
+#Q1
+graph1<- ggplot(data=mpg, aes(x=manufacturer))+geom_bar()
+ggplotly(graph1)
+```
+#2.	Generate a word cloud of the text from this website: https://lite.cnn.com/en/article/h_8abfba66dd3b29000407bb1ff5648c6e
+
+```{r}
+#Q2
+mytext <- readLines("https://lite.cnn.com/en/article/h_8abfba66dd3b29000407bb1ff5648c6e")
+
+mymatrix <- mytext%>%
+  VectorSource()%>%
+  Corpus()%>%
+  tm_map(content_transformer(tolower))%>%
+  tm_map(removeNumbers)%>%
+  tm_map(removePunctuation)%>%
+  tm_map(stripWhitespace)%>%
+  tm_map(removeWords, stopwords("English"))%>%
+  TermDocumentMatrix()%>%
+  as.matrix()
+mymatrix1<-sort(rowSums(mymatrix), decreasing = TRUE)
+mydf <- as.data.frame(mymatrix1)
+wordcloud(rownames(mydf), mydf$mymatrix1, colors = brewer.pal(8, "Dark2"))
+```
+
+---
+title: "Homework9"
+author: "Pa"
+date: "2022-11-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(plotly)
+```
+#1.	The marketing_data  recorded the impact of the advertising media, Facebook, on sales. Data are the advertising budget in thousands of dollars along with the sales. Use the data to answer the following:
+a)	generate an appropriate graph using ggplot to show the relationship between the facebook advertisement amount (x) and sales amount (y); Color the points red; Fit a linear model to the points, without showing the confidence interval band; Color the line blue.
+b)	Based on a), generate an interactive plot.
+
+
+```{r}
+#Q1
+#without showing confidence interval bands 
+facebookgraph<-marketing_data %>%
+ggplot(aes(x= facebook, y=sales) )+ geom_point()+ geom_point(color= "red")+geom_smooth(method = "lm", se=FALSE, color="blue")
+
+ggplotly(facebookgraph)
+```
+#2.	The Estriol and Birthweight data  recorded the mothers’ estriol level at pregnancy and the newborns’ birthweight.
+a)	Use the data to generate an appropriate graph to show the five-number summary for birth weight.
+b)	Based on a), create an interactive plot.
+c)	Based on the plot, is there any outlier? If so, what is the birth weight of that outlier? Use comment to write it in R Markdown.
+
+
+```{r}
+#Q2
+#there is no outlier 
+birthweightdata <- Estriol_and_birthweight %>%
+  ggplot(aes(x= Estriol, y= Birthweight))+ geom_boxplot()
+
+ggplotly(birthweightdata)
+```
+#3.	a) Create the following table as a data frame named as StudentGrades
+ID	HomeworkGrades	MidtermGrades	FinalGrades
+A	99	82	80
+B	90	89	83
+C	87	75	70
+D	95	91	92
+
+b) Create an interactive table of a)
+c) Sort the final grades of the interactive table of b) (No need to show this in your output)
+
+
+```{r}
+#Q3
+#no need to show sort
+library(DT)
+ID<- c("A", "B", "C", "D")
+HomeworkGrades <- c(99,90,87,95)
+MidtermGrades <- c(82,89,75,91)
+FinalGrades <- c(80,83,70,92)
+StudentGrades <- data.frame(ID, HomeworkGrades, MidtermGrades, FinalGrades)
+
+datatable(StudentGrades)
+```
+#4.	a) Create a character vector, a, with these store names: Walmart, Walmart-marketplace, Walmart-online, Target, Target-marketplace, Amazon, Amazon.com, AmazonFresh;
+b) Create a for-loop with the index goes from 1 to the end of the vector a, if the first five letters of the store names are the same (think about using substr()), then those are the same store. We want to count the number of unique stores in the vector, a. You may want to create two for-loops with one to scrape the first five letters of each element of a; and the other loop to compare whether the scraped phrases are the same. At the end, you should get 3 stores.
+
+
+```{r}
+#Q4
+x<- c("Walmart", "Walmart-marketplace", "Walmart-online", "Target", "Target-marketplace", "Amazon", "Amazon.com", "AmazonFresh")
+y=NULL
+for (i in 1:8 ) {
+  y[i]<- substr(x[i], start = 1, stop = 5)
+  
+}
+counts=1
+for (i in 2:8){
+  if (y[i] == y[i-1] ){
+    counts= counts
+  }
+  else {
+    counts = counts+1
+  }
+  
+}
+counts
+```
+
+#5.	Use the text website https://lite.cnn.com/en/article/h_6ad3cbadfea768b22ea0c12f5d869840
+talking about the admission ticket price to Disney. Based on this text and follow along with what we did in-class for text mining (create VectorSource, Corpus, remove all numbers, punctuations, white space, English common words etc.), generate a word cloud.
+
+```{r}
+library(tm)
+library(wordcloud)
+```
+
+```{r}
+#Q5
+mytext <- readLines("https://lite.cnn.com/en/article/h_6ad3cbadfea768b22ea0c12f5d869840")
+
+mymatrix <- mytext%>%
+  VectorSource()%>%
+  Corpus()%>%
+  tm_map(content_transformer(tolower))%>%
+  tm_map(removeNumbers)%>%
+  tm_map(removePunctuation)%>%
+  tm_map(stripWhitespace)%>%
+  tm_map(removeWords, stopwords("English"))%>%
+  TermDocumentMatrix()%>%
+  as.matrix()
+mymatrix1<-sort(rowSums(mymatrix), decreasing = TRUE)
+mydf <- as.data.frame(mymatrix1)
+wordcloud(rownames(mydf), mydf$mymatrix1, min.freq = 7, colors = brewer.pal(8, "Dark2"))
+```
+

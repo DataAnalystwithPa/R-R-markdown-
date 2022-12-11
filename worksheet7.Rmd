@@ -1,0 +1,50 @@
+---
+title: "Class7notes"
+author: "Pa"
+date: "2022-10-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(rvest)
+library(ggplot2)
+library(tidyverse)
+library(Lahman)
+```
+
+```{r}
+Piggy %>%
+  gather(key = week, value = weights, week0,week4, week8, week12, week16)
+
+
+Diabete %>%
+  spread(key= Time, value = SBP)
+```
+
+```{r}
+Tree_data %>%
+  apply(data= Tree_data, MARGIN = 2, FUN = mean, na.rm=TRUE)
+```
+
+```{r}
+Team1<-Teams %>%
+  select(teamID, Rank, G, W, L,R, RA)
+
+lapply(Team1, MARGIN = 2, FUN = mean, na.rm=TRUE)
+sapply(Team1, MARGIN = 2, FUN = mean, na.rm=TRUE)
+apply(Team1, MARGIN = 2, FUN = mean, na.rm=TRUE)
+```
+
+```{r}
+library(rvest)
+table1<- read_html("https://en.wikipedia.org/wiki/List_of_2022_Winter_Olympics_medal_winners")
+table1 %>%
+  html_nodes("table")%>%
+  html_table(fill=TRUE)%>%
+  .[[13]]
+```
+

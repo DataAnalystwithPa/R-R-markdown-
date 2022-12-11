@@ -1,0 +1,27 @@
+Steps of doing hypothesis testing 
+Step1: null and alternative 
+	H0: p=
+	Ha: p>.. or p<, or p…
+Step2: choose a test 
+Step3: find the test statistic and p=value 
+Step4: make a decision 
+
+formulate null and alterative hypotheses:
+null hypotheses: statement is neutral and shows “no difference”, no relationship 
+alternative hypothesis: if > or <, it is one tailed; if it is twosided
+
+
+Test statistic= 
+-	For testing one-sample proportion 
+o	Sample proportion; p: population proportion in; n:sample size 
+-	For comparing two proportions 
+If p-value <0.05 then we reject H0 
+If p-value >0.05 then we fail to reject H0
+Function: prop.test(x=….,n=…,p=….,alternative=”…”)
+	x: number of outcomes
+	n: sample size 
+	p: the population proportion value claimed in
+	alternative: the tails of 
+	“two.side”    -- when comparing two variables if one is higher than the other 
+	“greater”
+	“less”

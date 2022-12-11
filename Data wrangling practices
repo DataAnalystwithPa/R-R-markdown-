@@ -1,0 +1,199 @@
+---
+title: "Worksheet6"
+author: "Pa"
+date: "2022-09-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1.	Use the data flights in the R package nycflights13 (dataset on flights departing New York City in 2013) and use pipe
+•	Choose only January flights and the flights running between JFK (origin) and MSP (destination)
+•	Select the variables: dep_time, dep_delay, arr_time, arr_delay, air_time, and distance
+•	Add a column to show the speed of selected flights: speed=distance/ air time
+•	Create a new file “newflight” to save the above changes
+•	Use the newflight data to sort by the arrival delay time 
+•	Generate an appropriate graph to see the relationship between arrival delay and speed
+•	Is there a strong correlation?
+
+
+```{r}
+#Q1
+newflight<-flights%>%
+  filter(month==1 & origin=="JFK" & dest=="MSP")%>%
+  select(dep_time, dep_delay, arr_time,arr_delay, air_time,distance)%>%
+  mutate(speed=distance/air_time)
+
+newflight%>%
+  arrange(arr_delay)%>%
+  ggplot(aes(x=speed, y=arr_delay))+ geom_point()
+  
+```
+#2.	Use the flights data to do the following:
+a)	Keep the none NA’s of departure delay values, and find the mean departure delay by destination. List the top three means.
+
+b)	Find the total missing departure delay flights by destination (Hint: keep all NA’s of departure delays and find the total by destination). List the top three total.
+
+
+
+c)	The missing values of air_time show the cancelled flights, find the total cancelled flights by month, and generate a line chart to see the change over time.
+
+
+```{r}
+#Q2a
+flights %>%
+  filter(!is.na(dep_delay))%>%
+  group_by(dest)%>%
+  summarize(avgdelay= mean(dep_delay))%>%
+  arrange(desc(avgdelay))
+```
+
+```{r}
+#Q2b
+flights %>%
+  filter(is.na(dep_delay))%>%
+  group_by(dest)%>%
+  summarize(totaldelay = n())%>%
+  arrange(desc(totaldelay))
+```
+
+```{r}
+#Q2C
+flights %>%
+  filter(is.na(air_time))%>%
+  group_by(month)%>%
+  summarize(totalf=n())%>%
+  ggplot(aes(x=month, y=totalf))+ geom_line()
+```
+3.	Merge the two tables using inner_join. 
+Country	Year	X1
+Canada	2000	21
+Canada	2001	25
+USA	2000	23
+USA	2001	28
+Japan	2000	29
+Japan	2001	30
+
+Country	Year	X2
+Canada	2000	2
+Canada	2001	6
+USA	2000	7
+USA	2001	12
+Japan	2000	6
+Japan	2001	30
+
+```{r}
+#Q3
+Country <- c("Canada", "Canada", "USA", "USA", "Japan", "Japan")
+Year<- c(2000,2001)
+x1<- c(21,25,23,28,29,30)
+x2<-c(2,6,7,12,6,30)
+table1<-data.frame(Country,Year,x1)
+table2<-data.frame(Country, Year, x2)
+inner_join(table1, table2, by=c("Country", "Year"))
+```
+
+---
+title: "Homework6"
+author: "Pa"
+date: "2022-10-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#1.	The data COVID-19-Vaccine on D2L recorded the developer, product category (type of vaccine), stage of development, and vaccine description by September 2020. Do the following three parts in one pipeline.
+a)	Keep non-missing values of product category
+b)	Find the total number of vaccines of each product category using group_by() and summarize()
+c)	Sort the total counts of each product category in b)
+
+
+```{r}
+#Q1
+library(tidyverse)
+
+COVID_19_Vaccine %>%
+  filter(!is.na(ProductCategory))%>%
+  group_by(ProductCategory)%>%
+  summarize(total= n())%>%
+  arrange(total)
+```
+2.	Use the data Recycling. This data is obtained from the Minnesota Pollution Control Agency (MPCA) site. The data recorded the amount of recycling in residential area (ResTons) and in commercial area (CIITons) from 1991 to 2017 for the 87 Minnesota counties. Use tidyverse functions to answer the following:
+a) Find the mean residential recycling (ResTons) by year
+b) Graph the means in a) over years (note: a) and b) can be in one pipeline)
+c) Find the mean residential recycling (ResTons) by county. What are the top 3 counties with the highest mean amount of residential recycling? Does that make sense in MN? Use comments to answer in your R Markdown file.
+d) Find the mean residential recycling (ResTons) by category. 
+
+
+```{r}
+#Q2a
+library(tidyverse)
+Recycling2 <- Recycling %>%
+  group_by(Year)%>%
+  summarize(avgrecycling= mean(ResTons))%>%
+  arrange(avgrecycling)
+```
+
+```{r}
+#2b 
+Recycling2 %>%
+  ggplot(aes(x=Year, y=avgrecycling))+geom_point()
+```
+
+```{r}
+#2C
+Recycling %>%
+  group_by(County)%>%
+  summarize(avgRecy= mean(ResTons)) %>%
+  arrange(desc(avgRecy))
+
+#yes this makes sense in MN 
+```
+
+```{r}
+#2D
+Recycling %>%
+  group_by(Category)%>%
+  summarize(Resident_avgrecy= mean(ResTons)) %>%
+  arrange(Resident_avgrecy)
+```
+
+
+
+
+#5.	Create the following two tables first, and then merge the two tables:
+ 
+StudentID	Gender	Age
+A	Female	21
+B	Male	19
+C	Male	20
+D	Female	22
+E	Female	20
+
+StudentID	Midterm	Final
+A	78	82
+B	97	95
+C	81	76
+D	93	95
+E	82	86
+ 
+
+
+```{r}
+#Q5 
+StudentID <- c("A","B","C", "D", "E")
+Gender <- c("Female", "Male","Male", "Female", "Female")
+Age <- c(21,19,20,22,20) 
+Midtern <- c(78,97,81,93,82)
+Final <- c(82,95,76,95,86)
+d1 <- data.frame(StudentID, Gender, Age)
+d2<- data.frame(StudentID, Midtern, Final)
+inner_join (d1, d2, by= c("StudentID"))
+```
+```{r}
+
+```
+
+

@@ -7,3 +7,36 @@ convert to a factor
 as.character(vector)    #convert vector to a character vector 
 as.factor(vector)    #convert to factor 
 as.numeric(vector)   #convert factor to numeric vector 
+function Read data files into R 
+read.csv(files,header=TRUE)  #or load package to current console 
+write function: 
+Step 1: inputs/arguments/parameters pass in function body 
+-	Arguments are also called inputs or parameters 
+Step 2: a sequence of R instruction/expressions to accomplish a goal using the inputs 
+-	Sequence of instruction must be enclosed in {}
+Step 3: Output, single item (a value, a vector, or a data frame), is returned 
+Example: 
+#R function syntax 
+Name <- function(argument1, argument2,…){
+Instruction 
+return(object)
+}
+
+#example add two number 
+Addtwo<-function(x,y){
+			Z<-x+y
+			Return(z)
+}
+
+#call an R function 
+addtwo(1,2)    #1 and 2 goes into the function “addtwo)
+
+#function used to split the word into letters, where a is a word 
+strsplit(a, “”)[[1]]  
+
+#function used to reverse the letters 
+rev()
+
+#function used to paste all the letters in b as one phrase (word) in “” 
+paste(b, collapse= “’)
+

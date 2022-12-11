@@ -1,0 +1,24 @@
+convert data format from wide to long/ long to wide:
+gather(key=  , value=   ) : change wide fromat to long format 
+spread(key=  , value=   ) : change the long format to wide format
+Key= 
+	They key is usually a categorical variables showing time/location/treatment index 
+	When gathering, the key is usually not in the data frame, need to name it 
+Value= 
+	For spread(): the variable that stores the values being spread, only one value, e.g. value=sbp 
+	For gather(): the variable to hold the gathered values is not in the data frame, need to name it, and need the variables that currently have the values being gathered 
+	spread(): no need of new variables 
+	gather(): both key and the first values are new variables
+
+Data scraping text: 
+Right click and choose view source 
+Use function html_nodes() and html_text() from rvest packages 
+name<- read_html(“webpage address”) to retrieve the website 
+name %>%
+	html_nodes(“title”) %>%
+	html_text() %>%
+	html_table(fill=TRUE)%>%
+	.[[k]]       #k refers the kth table on the web
+To remove line breaks 
+	str_replace_all(x, “[\r\n]”,””)
+	str_replace_all(): a function in the stringr package and the stringr package is in the tidyverse

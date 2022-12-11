@@ -1,0 +1,61 @@
+---
+title: "Worksheet6"
+author: "Pa"
+date: "2022-09-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Q1
+newflight<-flights%>%
+  filter(month==1 & origin=="JFK" & dest=="MSP")%>%
+  select(dep_time, dep_delay, arr_time,arr_delay, air_time,distance)%>%
+  mutate(speed=distance/air_time)
+
+newflight%>%
+  arrange(arr_delay)%>%
+  ggplot(aes(x=speed, y=arr_delay))+ geom_point()
+  
+```
+
+```{r}
+#Q2a
+flights %>%
+  filter(!is.na(dep_delay))%>%
+  group_by(dest)%>%
+  summarize(avgdelay= mean(dep_delay))%>%
+  arrange(desc(avgdelay))
+```
+
+```{r}
+#Q2b
+flights %>%
+  filter(is.na(dep_delay))%>%
+  group_by(dest)%>%
+  summarize(totaldelay = n())%>%
+  arrange(desc(totaldelay))
+```
+
+```{r}
+#Q2C
+flights %>%
+  filter(is.na(air_time))%>%
+  group_by(month)%>%
+  summarize(totalf=n())%>%
+  ggplot(aes(x=month, y=totalf))+ geom_line()
+```
+
+```{r}
+#Q3
+Country <- c("Canada", "Canada", "USA", "USA", "Japan", "Japan")
+Year<- c(2000,2001)
+x1<- c(21,25,23,28,29,30)
+x2<-c(2,6,7,12,6,30)
+table1<-data.frame(Country,Year,x1)
+table2<-data.frame(Country, Year, x2)
+inner_join(table1, table2, by=c("Country", "Year"))
+```

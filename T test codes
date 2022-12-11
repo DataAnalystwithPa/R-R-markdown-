@@ -1,0 +1,50 @@
+difference between paired T test and Independent T test 
+	One sample T-test
+o	Compare population average to a number 
+	Two sample t-test
+o	Compare two population averages 
+	Independent T if the means are from two independent populations 
+	Paired T if the two means are from one population at different times/locations/treatments 
+
+How to use R to do one sample and two sample T test: 
+	One sample t-test
+o	If p-value <, then reject 
+o	If p-value >, fail to reject 
+	T.test(x= , mu= , alternative= “”)
+o	x: a numeric vector of data values 
+o	mu=: claimed population mean in H0
+o	alternative: “two.sided”, “greater”, or “less”
+
+	Two sample T-test
+o	Compare two population means 
+	Independent t-test
+	Paired t-test 
+o	Independent t-test 
+	Compare two totally different populations 
+	May have different sample sizes 
+	R: t.test(DV~IV, data= , alternative= “”)
+	R: t.test(x=c(), y=(), alternative = “”)
+o	Paired t-test 
+	One same population measured at different times or locations 
+	Usually comparing before and after; pre- and post-test; baseline and follow-up measurements 
+	Same sample sizes of the measurements
+
+How to use R to visualization to evaulate mean difference(generate a point plot with error bars to show the 95% confidence intervals)
+	Graph mean with error bars 
+	Use group_by() and summarize() to find the mean, standard error, and the with tstar=qt(1-,n-1)  
+	group_by(IV)%>%
+	summarize(ave=mean(var), se=sd(var)/sqrt(n), tstar=qt(1-0.05/2, n-1)
+	 use length() to get the n 
+
+generate graph using ggplot() and geom_point() and geom_errorbar()
+	ggplot(aes(x=IV, y=ave))+geom_point()+geom_errorbar(aes(ylim=av-tstar*se, ymax=ave+tstart*se))
+
+When to use a t-test and when to use a proportion test: 
+-use when comparing two different variables 
+function: 
+	t.test(DV~IV, data=, alternative=, paired=TRUE)
+	t.test(x,y, alternative=, paired=TRUE)
+o	paired:
+	=TRUE: if it is a paired T-test
+	Default is FALSE, not a paired test 
+

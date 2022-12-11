@@ -1,0 +1,118 @@
+---
+title: "Worksheet 12"
+author: "Pa"
+date: "2022-11-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyselect)
+library(ggplot2)
+```
+#1.	Test the relationship between the number of letters in a last name and the scrabble score of a last name.
+•	How many letters are in your last name?   ___3___
+•	Using the table below, determine the Scrabble point value for each of the letters in your last name. 
+a	b	c	d	e	f	g	h	i	j	k	l	m	n	o	p	q	r	s	t	u	v	w	x	y	z
+1	3	3	2	1	4	2	4	1	8	5	1	3	1	1	3	10	1	1	1	1	4	4	8	4	10
+
+•	Scrabble value of my last name: ___6_________
+•	Compile the data from your classmates to create a dataset with number of letters as the independent variable and scrabble value as the dependent variable. 
+Data from our class
+Number of letters	9	3	4	7	3	5	4	5	9	8	5	6	5	7
+Scrabble score	13	6	4	9	3	8	8	6	13	14	10	8	5	14
+a)	What is the linear regression equation?
+b)	Is there a significant relationship between the number of letters and the scrabble value? (state the p-value to explain)
+
+
+```{r}
+#1:
+numbers_letters<- c(9,3,4,7,3,5,4,5,9,8,5,6,5,7)
+scrabble_score <- c(13,6,4,9,3,8,8,6,13,14,10,8,5,14)
+Class_data<- data.frame(numbers_letters, scrabble_score)
+
+ClassTest<-lm(scrabble_score~ numbers_letters, data = Class_data)
+summary(ClassTest)
+
+#yhat=-0.39+1.58x
+#h0: beta=0, ha: beta!=0
+#Reject H0: There is evidence to support that there is a signigicant linear relationship between the number of letters and scrabble value of a last name
+```
+#2.	Use R data mtcars, consider miles per gallon (mpg) as the dependent variable, and independent variables (predictor variables) of horsepower(hp), rear axle ratio ( drat), and weight (wt).
+Perform a multiple regression and write down the regression model.
+What are the significant factors?
+
+```{r}
+#2:
+Carmodel <- lm(mpg~ hp+drat+wt, data = mtcars)
+summary(Carmodel)
+
+#yhat= 29.39-0.03x1+1.62x2-3.22x3
+#H0: beta =0, Ha: beta!= 0
+# The significant factor is horsepower and weight
+```
+
+---
+title: "Homework12"
+author: "Pa"
+date: "2022-11-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(Lahman)
+```
+#1.	One of nature’s patterns connects the percent of adult birds in a colony that return from the previous year and the number of new adults that join the colony. The number of new adults joining the colony changes when the percent of returning birds changes. Here are data for 12 colonies of sparrow-hawks:
+Percent return (x)	66	81	52	73	62	52	45	62	46	60	46	38
+New adults (y)	10	8	13	12	15	16	17	18	18	19	20	20
+a)	Generate a linear model to find the linear relationship between the percent return (x) and the new adults (y). Write down your equation as a comment in your R Markdown file.
+
+b)	Is there a significant linear relationship between the percent return and the new adults? Write down your p-value and your decision as a comment in your R Markdown file.
+
+
+```{r}
+#1:
+Percent_return <- c(66,81, 52,73,62,52,45,62,46,60,46,38)
+New_adults <- c(10,8,13,12,15,16,17,18,18,19,20,20)
+sparrow_hawks <- data.frame(Percent_return, New_adults)
+
+sparrow_hawksTest<-lm(New_adults~ Percent_return, data = sparrow_hawks)
+summary(sparrow_hawksTest)
+
+#H0: beta=0, Ha: beta!=0
+#yhat= 29.5-0.246x
+#pvalue=0.00237
+#reject H0. There is evidencet to support that there is a significant linear relationship between the percent return and new adults 
+```
+#2.	Use the LEAD data. Consider the dependent variable, full IQ score (iqf), and the independent predictors, Gender (sex), Comprehension subtest IQ score (iqv_comp), Arithmetic subtest IQ score (iqv_ar), Digit span subtest IQ score (iqv_ds), Picture completion subtest IQ score (iqp_pc), Block design subtest IQ score (iqp_bd), Coding subtest IQ score (iqp_cod), and lead group (Group with 1 meaning control group and 2 meaning exposed group). Perform a multiple regression and write down the equation of the regression model in your R Markdown file, and specify the significant factors.
+
+```{r}
+#2:
+LEAD_dataLinear<-lm(iqf~ sex+iqv_comp+iqv_ar+iqv_ds+iqp_pc+iqp_bd+iqp_cod+Group, data = LEAD_data)
+summary(LEAD_dataLinear)
+
+#H0: beta=0 Ha: beta!=0
+#yhat= 33.32+-1.15x1+0.87x2+1.35x3+1.096x4+0.95x5+1.33x6+1.02x7-0.157x8
+#significant factors are: Comprehension subtest IQ score (iqv_comp), Arithmetic subtest IQ score (iqv_ar), Digit span subtest IQ score (iqv_ds), Picture completion subtest IQ score (iqp_pc), Block design subtest IQ score (iqp_bd), and Coding subtest IQ score (iqp_cod)
+```
+#3.	The dataset Teams in the package Lahman recorded the baseball records. Among all the variables, R showed the number of runs scored, H showed the number of hits by batters, X2B recorded the number doubles, and X3B recorded the number of triples. Let the number of runs scored be the dependent variable, do a multiple regression to see the relationship between the number of runs scored with the number of hits by batters (H), the number of doubles (X2B) and triples (X3B). Write down the equation of the regression model in your R Markdown file as a comment, and specify the significant factors related to the number of runs scored.
+
+```{r}
+#3:
+TeamsLinear <- lm(R~ H+X2B+X3B, data = Teams)
+summary(TeamsLinear)
+
+#yhat= 33.38+0.326x1+0.6888x2+1.17x3
+#significant factor are: the number of hits by batters (H), the number of doubles (X2B) and triples (X3B).
+```
+
+

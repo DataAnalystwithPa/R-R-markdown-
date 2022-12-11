@@ -1,68 +1,9 @@
-These are my Task that I have to do for my homework on Learning R function of inputs and outpust:  
-
-1. What does the following function return? Why? (Write comments in your RMarkdown file with a
-couple of sentences to explain why you obtain such an output).
-F1<-function(x=2, y=0) {
-x+y
-}
-F1(3,4)
-
-#[1] 7  it shows this because the input specifically stated that x and y equals 3,4 so when it goes into the function it adds up both of those numbers instead on 2 and 0. 
-
-2. What does the following function return? Why? (Write comments in your RMarkdown file to
-explain why your output is like that)
-l<-function (x){
-result<-x+1
-return(result)
-}
-m<-function(){
-l<-function(x) {
-result<-x*2
-return(result)
-}
-l(10)
-}
-m()
-
-#[1] 20 because the coding stated that to put in 10 as the variable of I and shows/print out  the function of m only
-
-3. Create a function in R to calculate the T statistic for the one-sample T-test
-T = x−μ
-s
-√ n
-Where x is the sample mean, μ is the population mean, s is the sample standard deviation and n
-is the sample size. Suppose the input arguments are x, μ, s and n
-Call your function with the inputs: x=2.1, μ=1, s=0.5, n=50
-CODE:
-T_stat<-function(x,u,s,n){
-  T<-(x-u)/(s/sqrt(n))
-  return(T)
-}
-T_stat(2.1,1,0.5,50)
-
-4. Your collaborator tells you that you can use the length of the hindfoot to calculate brain volume.
-Apparently the hindfoot of these creatures is equal to the diameter of their skulls. Write a
-function that will calculate the volume of the animals’ skulls and apply it to this dataset. The
-formula of volume of a sphere is 4∗π∗r3
-3 , where r is the radius of the skull. Include one input:
-d being the diameter of the skull. Call the function with the inputs: d=5, where d is the
-diameter (hindfoot) of a skull.
-CODE:
-voulme<-function (d){
-    r<-d/2
-    result<-(4*pi*(r^3))/3
-    return(result)
-  }
-voulme(5)
-
-5. Create a function to find the center of mass for two masses, with four parameters (input or
-arguments) being m1, m2, x1 and x2, where m1 and m2 are the mass of the two and x1 and x2
-are the locations of the two masses. The following figure showed the calculation of the center of
-two masses.
-Call the function with the inputs: m1=2 , m2=5 , x1=3 ,∧x2=10
-CODE: 
-center<-function(m1,m2,x1,x2){
-  C<-((m1*x1)+(m2*x2))/(m1+m2)
-  return(C)
-}
-center(2,5,3,10)
+create a data frame in R 
+mydata<-data.frame(variable1, variable2, variable4, variable5, variable6)
+Create a vector and Matrix 
+a<-c(3,15,22,17)   #define vector 
+B<-matrix(c(3,4,5,7,-2,6,8,10,12,-3,7,6), nrow=3, byrow = TRUE)    #create matrix 
+convert to a factor 
+as.character(vector)    #convert vector to a character vector 
+as.factor(vector)    #convert to factor 
+as.numeric(vector)   #convert factor to numeric vector 

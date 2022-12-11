@@ -1,0 +1,10 @@
+how to use R to perform simple linear regression to generate a model and test the slope
+Scatter plot: ggplot(data=…aes(x= , y=))+geom_point()+geom_smooth(method= “lm”)
+
+Linear regression function: model <- lm(y~x, data=  )
+                             Summary(model)
+
+how to use R to perform multiple regression to generate a model and test the slopes
+R: model<- lm(DV ~ IV1+IV2+…IVK, data= )
+   Summary(model)
+

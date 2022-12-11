@@ -1,0 +1,70 @@
+Packages used for GGPLOT 
+GGPLOT2
+
+Generate graph function/format
+ggplot(data =  , aes(x=  , y=   ))+geom_point()+…
+-	data: name of dataset 
+-	aes: list x-variable and y-variable 
+-	geom_: type of plot 
+
+Different types of graphs 
+line graph: time-series data 
+bar graph/historgram: used for ranking, coparing proportions, compare different group of values, and show distribution of a variable(numeric or categorical)
+scatter plot: used to show the relationship[/ correlation between two numeric variables 
+boxplot: used to show five number summary( min, Q1, median, Q3, max) of a variable 
+geo_graph: spatial data 
+
+Generate scatter plot 
+ggplot(data=   , aes(x=   , y=    )) + geom_point()
+
+#adding x or y limit to scatter plot or any graph: xlim(c(     ,     )+ ylim(c(     ,     ))
+ggplot(data=   , aes(x=   , y=    )) + geom_point()+xlim(c(     ,     )+ ylim(c(     ,     ))
+#adding labels and title: labs(x= “”, y= “”, title= “”)
+ggplot(data=   , aes(x=   , y=    )) + geom_point()+xlim(c(     ,     )+ ylim(c(     ,     ))+ labs(x= “”, y= “”, title= “”)
+#change color: geom_point(color= “red”)
+ggplot(data=   , aes(x=   , y=    )) + geom_point()+xlim(c(     ,     )+ ylim(c(     ,     ))+ labs(x= “”, y= “”, title= “”)+ geom_point(color= “red”)
+
+#change color to show one variable: geom_point(aes(color=variable))
+ggplot(data=   , aes(x=   , y=    )) + geom_point()+xlim(c(     ,     )+ ylim(c(     ,     ))+ labs(x= “”, y= “”, title= “”)+ geom_point(aes(color=variable))
+
+#change size of dots: geom_point(size=#)  change size of all points 
+ggplot(data=   , aes(x=   , y=    )) + geom_point()+xlim(c(     ,     )+ ylim(c(     ,     ))+ labs(x= “”, y= “”, title= “”)+ geom_point(size=#)
+#change size of point to show different levels of categorical variables: geom_point(size=variable))
+ggplot(data=   , aes(x=   , y=    )) + geom_point()+xlim(c(     ,     )+ ylim(c(     ,     ))+ labs(x= “”, y= “”, title= “”)+ geom_point(size=variable))
+
+#adding linear regression line: geom_smooth()
+Arguments for geom_smooth():
+Method= “”
+-	lm: linear model 
+-	auto: automatically fitted model 
+-	loess: loess regression usually for small dataset 
+se: confidence interval of the regression line 
+-	TRUE 
+-	FALSE
+Linetype= 
+-	Dashed 
+-	Dotted 
+Color= 
+
+#time series plot 
+ggplot(data=   , aes(x=   , y=    ))+geom_line()
+#adding features to time series plot 
+Change color: geom_line(color= “”) or geom_line(aes(color=variable))
+Change size: geom_line(size=)
+Change line type: geom_line(linetype= “”)
+-	Dashed, dotted, solid, dotdash 
+#Bar graph 
+ggplot(data=   , aes(x=   , y=    ))+geom_bar()
+#adding features to bar graph 
+Change color: geom_bar(fill= “color”)
+Only change border color: geom_bar(color= “color”)
+Change text angels: theme(azis.text.x=element_text(angle= )
+#histogram: 
+ggplot(data=   , aes(x=   , y=    ))+geom_histogram()
+#adding features to histogram
+Change color: geom_histogram(fill= “color”)
+Change bin size: 
+-	Change number of bins: geom_histogram(bins = )
+-	Change bin width (size): geom_histogram(binwidth= )
+#box plot 
+ggplot(data=   , aes(x=   , y=    ))+geom_boxplot()

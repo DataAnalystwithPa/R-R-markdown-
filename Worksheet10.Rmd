@@ -1,0 +1,51 @@
+---
+title: "week10"
+author: "Pa"
+date: "2022-11-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#q1
+#H0: p=0.75, Ha: p>0.75
+prop.test(x=9, n=12, p=0.75, alternative = "greater")
+
+#We fail to reject H0. There is no evidence to support the proportion of people who can roll their tong is more than 75%. 
+```
+
+```{r}
+#Q2
+table(Responses_to_Self_driving_Cars$Comfortable)
+#h0: p=0.5, Ha: p<0.5
+prop.test(x=2860, n=5980, p=0.5, alternative = "less")
+
+#reject H0. There is evidence to support that there is less than 50 percentage of people who feel comfortable riding in a self drving car. 
+```
+
+```{r}
+#Q3
+library(ggplot2) 
+#h0: p(women)=p(men)Ha: p(women)!= p(men)
+prop.test(x=c(140,130), n=c(300,270), alternative = "two.sided")
+#fail to reject H0. There is no evidence to support that the proportion of steal in women is different from the steal in men
+
+Gender<- c("Male", "Female")
+steal <- c(140/300,130/270)
+mydata <- data.frame(Gender, steal)
+
+ggplot(data = mydata, aes(x= Gender, y= steal))+geom_bar(stat = "identity", position = "dodge")
+```
+
+```{r}
+#Q4
+table(Titanic_Survival_Data$Class, Titanic_Survival_Data$Survival)
+
+#H0: p(firsrt)= p(third); Ha: p(first)> p(third)
+prop.test(x=c(203,178), n=c(325,706), alternative = "greater")
+#reject H0. There is evidence to support that the survival rate in the first class is significantly higher than the survival rate in the third class 
+```
+
